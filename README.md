@@ -15,8 +15,17 @@ since that will cause recursive logging:
 
 ### Change JSON Layout schema
 
-[Extend log4j 2](https://logging.apache.org/log4j/2.x/manual/extending.html)  
-[Add a new json lib?](https://github.com/bolerio/mjson)
+[Extend log4j 2](https://logging.apache.org/log4j/2.x/manual/extending.html) 
+[Layouts](https://logging.apache.org/log4j/2.x/manual/extending.html#Layouts)
+[Add a new json lib](https://github.com/bolerio/mjson)
+
+All Layouts must implement the Layout interface.
+~~Layouts that format the event into a String should extend AbstractStringLayout~~
+Every Layout must declare itself as a plugin using the Plugin annotation.
+ The type must be "Core", and the elementType must be "layout". 
+ 
+ printObject should be set to true if the plugin's toString method will provide a representation of the object and its parameters.
+ The name of the plugin must match the value users should use to specify it as an element in their Appender configuration. The plugin also must provide a static method annotated as a PluginFactory and with each of the methods parameters annotated with PluginAttr or PluginElement as appropriate.
 
 final schema should be
 ```
@@ -34,6 +43,8 @@ final schema should be
 
 https://kafka.apache.org/documentation/
 https://docs.cloudera.com/runtime/7.2.1/kafka-managing/topics/kafka-manage-cli-consumer.html
+
+http://wurstmeister.github.io/kafka-docker/
 
 "org.apache.kafka" % "kafka-clients"
   
