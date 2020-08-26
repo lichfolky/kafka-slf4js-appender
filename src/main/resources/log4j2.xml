@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="INFO">
+<Configuration>
     <Appenders>
-        <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout>
-                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
-            </PatternLayout>
-        </Console>
+        <!--
+            <Console name="Console" target="SYSTEM_OUT">
+                <WaspJsonLayout/>
+            </Console>
+        -->
+        <Kafka name="Kafka" topic="log-test">
+            <WaspJsonLayout/>
+            <Property name="bootstrap.servers">localhost:9092</Property>
+        </Kafka>
     </Appenders>
     <Loggers>
-        <Root level="INFO">
-            <AppenderRef ref="Console"/>
+        <Root level="DEBUG">
+            <AppenderRef ref="Kafka"/>
         </Root>
+        <Logger name="org.apache.kafka" level="INFO"/> <!-- avoid recursive logging -->
     </Loggers>
 </Configuration>
